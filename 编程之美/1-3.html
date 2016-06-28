@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一摞烙饼的排序</title>
+</head>
+<body>
+<script>
+    function findPath(sizeArr){
+        var path = [];
+
+        function find(sizeArr){
+            if(sizeArr.length === 0){
+                return;
+            }
+
+            var newSizeArr = null;
+
+            var maxSizeIndex = findMaxSizeIndex(sizeArr);
+
+            if(maxSizeIndex === sizeArr.length){
+                sizeArr.pop();
+
+                find(sizeArr);
+                return;
+            }
+
+            newSizeArr = sizeArr.slice(0, maxSizeIndex).reverse().concat(sizeArr.slice(maxSizeIndex)).reverse();
+
+            path.push(maxSizeIndex);
+            path.push(sizeArr.length);
+
+
+            newSizeArr.pop();
+
+            find(newSizeArr);
+        }
+
+        find(sizeArr);
+
+        console.log("path is: ", path);
+    }
+
+    function findMaxSizeIndex(sizeArr){
+        var max = sizeArr[0],
+                index = 0;
+
+        sizeArr.forEach(function(size, i){
+            if(max < size){
+                max = size;
+                index = i;
+            }
+        });
+
+        return index + 1;
+    }
+
+
+    //    findPath([2,3,1]);
+    //        findPath([2,3,1,4]);
+    findPath([2,1,5,4,3]);
+
+</script>
+</body>
+</html>
